@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{cadastroMedicoBean.medico}" />
+		<f:viewAction action="#{cadastroMedicoBean.prepararCadastro}" />
+	</f:metadata>
+
+	<h:head>
+		<title>Cadastro de Médicos</title>
+	</h:head>
+
+	<ui:define name="corpo">
+		<h2>Cadastro de Médicos</h2>
+
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" />
+			<p:panelGrid columns="2">
+				<p:outputLabel value="CRM" for="crm" />
+				<p:inputText id="crm" value="#{cadastroMedicoBean.medico.crm}"
+					required="true" requiredMessage="CRM obrigatório" />
+
+				<p:outputLabel value="Estado CRM" for="estado" />
+				<p:selectOneMenu id="estado"
+					value="#{cadastroMedicoBean.medico.crmEstado}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroMedicoBean.crmEstado}"
+						var="crmEstado" itemValue="#{crmEstado}"
+						itemLabel="#{crmEstado.descricao}" required="true"
+						requiredMessage="Estado do CRM obrigatório" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Especialidade" for="especialidade" />
+				<p:selectOneMenu id="especialidade"
+					value="#{cadastroMedicoBean.medico.especialidade}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroMedicoBean.especialidadeMedico}"
+						var="especialidade" itemValue="#{especialidade}"
+						itemLabel="#{especialidade.descricao}" required="true"
+						requiredMessage="Tipo de especialidade obrigatória" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" value="#{cadastroMedicoBean.medico.nome}"
+					required="true" requiredMessage="Nome obrigatório" />
+
+				<p:outputLabel value="Data Nascimento" for="dataNascimento" />
+				<p:calendar id="dataNascimento"
+					value="#{cadastroMedicoBean.medico.dataNascimento}"
+					pattern="dd/MM/yyyy" required="true" locale="pt_BR"
+					requiredMessage="Data de nascimento obrigatório" />
+
+				<p:outputLabel value="Sexo" for="sexo" />
+				<p:selectOneMenu id="sexo" value="#{cadastroMedicoBean.medico.sexo}"
+					required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroMedicoBean.sexoMedico}" var="sexo"
+						itemValue="#{sexo}" itemLabel="#{sexo.descricao}" required="true"
+						requiredMessage="Sexo obrigatório" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Salvar"
+					action="#{cadastroMedicoBean.salvar}" update="@form" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

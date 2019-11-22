@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{cadastroPacienteBean.paciente}" />
+		<f:viewAction action="#{cadastroPacienteBean.prepararCadastro}" />
+	</f:metadata>
+
+	<h:head>
+		<title>Cadastro de Pacientes</title>
+	</h:head>
+
+	<ui:define name="corpo">
+		<h2>Cadastro de Pacientes</h2>
+
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" />
+			<p:panelGrid columns="2">
+					
+				<p:outputLabel value="Matricula" for="matricula" />
+				<p:inputText id="matricula"
+					value="#{cadastroPacienteBean.paciente.matricula}" required="true"
+					requiredMessage="Matrícula obrigatória!" />
+
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" value="#{cadastroPacienteBean.paciente.nome}"
+					required="true" requiredMessage="Nome obrigatório!" />
+
+				<p:outputLabel value="Data Nascimento" for="dataNascimento" />
+				<p:calendar id="dataNascimento"
+					value="#{cadastroPacienteBean.paciente.dataNascimento}"
+					pattern="dd/MM/yyyy" required="true" locale="pt_BR"
+					requiredMessage="Data de nascimento obrigatória!" />
+
+				<p:outputLabel value="Grupo" for="grupo" />
+				<p:selectOneMenu id="grupo"
+					value="#{cadastroPacienteBean.paciente.grupo}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroPacienteBean.grupoPaciente}"
+						var="grupo" itemValue="#{grupo}" itemLabel="#{grupo.descricao}"
+						required="true" requiredMessage="Grupo obrigatório!" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Sexo" for="sexo" />
+				<p:selectOneMenu id="sexo"
+					value="#{cadastroPacienteBean.paciente.sexo}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroPacienteBean.sexoPaciente}"
+						var="sexo" itemValue="#{sexo}" itemLabel="#{sexo.descricao}"
+						required="true" requiredMessage="Sexo obrigatório!" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Telefone celular" for="telefone" />
+				<p:inputMask mask="(99) 99999-9999" id="telefone"
+					value="#{cadastroPacienteBean.paciente.telefone}" required="true"
+					requiredMessage="Telefone obrigatório!" />
+
+				<p:outputLabel value="Senha" for="senha" />
+				<p:password id="senha"
+					value="#{cadastroPacienteBean.paciente.senha}" required="true"
+					requiredMessage="Senha obrigatória" feedback="true"
+					promptLabel="Entre com a sua senha"
+					weakLabel="Força da senha: fraca" goodLabel="Força da senha: média"
+					strongLabel="Força da senha: forte" match="confsenha"
+					validatorMessage="As senhas devem ser iguais!" />
+
+				<p:outputLabel value="Repita a Senha" for="confsenha" />
+				<p:password id="confsenha"
+					value="#{cadastroPacienteBean.paciente.senha}" required="true"
+					requiredMessage="Repita a senha!" />
+
+				<p:commandButton value="Salvar"
+					action="#{cadastroPacienteBean.salvar}" update="@form" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{cadastroConsultaBean.consulta}" />
+		<f:viewAction action="#{cadastroConsultaBean.prepararCadastro}" />
+	</f:metadata>
+
+	<h:head>
+		<title>Cadastro de Consultas</title>
+	</h:head>
+
+	<ui:define name="corpo">
+		<h2>Cadastro de Consultas</h2>
+
+		<h:form >
+			<p:messages showDetail="false" showSummary="true" />
+			<p:panelGrid columns="2" >
+			
+				<p:outputLabel value="Data Consulta" for="dataConsulta" />
+				<p:calendar id="dataConsulta"
+					value="#{cadastroConsultaBean.consulta.dataConsulta}"
+					pattern="dd/MM/yyyy" required="true" locale="pt_BR"/>
+
+				<p:outputLabel value="Paciente" for="paciente" />
+				<p:selectOneMenu id="paciente"
+					value="#{cadastroConsultaBean.consulta.paciente}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroConsultaBean.todosPacientes}"
+						var="paciente" itemValue="#{paciente}"
+						itemLabel="#{paciente.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Médico" for="medico" />
+				<p:selectOneMenu id="medico"
+					value="#{cadastroConsultaBean.consulta.medico}" required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroConsultaBean.todosMedicos}"
+						var="medico" itemValue="#{medico}"
+						itemLabel="#{medico.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Motivo Consulta" for="motivo" />
+				<p:selectOneMenu id="motivo" value="#{cadastroConsultaBean.consulta.tipoConsulta}"
+					required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroConsultaBean.tipoConsulta}" var="tipoConsulta"
+						itemValue="#{tipoConsulta}" itemLabel="#{tipoConsulta.descricao}" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Salvar"
+					action="#{cadastroConsultaBean.salvar}" update="@form" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

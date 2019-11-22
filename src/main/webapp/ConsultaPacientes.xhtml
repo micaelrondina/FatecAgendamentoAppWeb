@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Consulta Pacientes</title>
+	</h:head>
+
+	<f:metadata>
+		<f:viewAction action="#{pacientesBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h2>Consulta Pacientes</h2>
+
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" />
+			<p:dataTable value="#{pacientesBean.pacientes}" var="paciente"
+				border="2" paginator="true" rows="7" paginatorPosition="bottom">
+
+				<p:column headerText="Matrícula" width="10%"
+					style="text-align: center" sortBy="#{paciente.matricula}">
+					<h:outputText value="#{paciente.matricula}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{paciente.nome}">
+					<h:outputText value="#{paciente.nome}" />
+				</p:column>
+
+				<p:column headerText="Grupo" width="12%" sortBy="#{paciente.grupo}"
+					style="text-align: center">
+					<h:outputText value="#{paciente.grupo.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Telefone" style="text-align: center" width="13%">
+					<h:outputText value="#{paciente.telefone}" />
+				</p:column>
+				
+				<p:column headerText="Sexo" width="12%" style="text-align: center">
+					<h:outputText value="#{paciente.sexo.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Data Nascimento"
+					sortBy="#{paciente.dataNascimento}" style="text-align: center" width="15%">
+					<h:outputText value="#{paciente.dataNascimento}">
+						<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Ações" width="10%" style="text-align: center">
+					
+					<p:button title="Editar" outcome="/CadastroPacientes"
+						icon="ui-icon-pencil">
+						<f:param name="id" value="#{paciente.matricula}" />
+					</p:button>
+
+					<p:commandButton title="Remover" icon="ui-icon-trash"
+						action="#{pacientesBean.excluir}" update="@form">
+						<f:setPropertyActionListener value="#{paciente}"
+							target="#{pacientesBean.pacienteSelecionado}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

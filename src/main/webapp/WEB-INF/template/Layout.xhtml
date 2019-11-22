@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:view contentType="text/html; charset=ISO-8859-1">
+
+<h:head>
+	<title><ui:insert name="titulo">Agendamento de Consultas</ui:insert>
+	</title>
+
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<h:outputScript library="js" name="locale.js" />
+	<h:outputScript library="js" name="fonte.js" />
+
+</h:head>
+
+<h:body>
+	<div class="acessibilidade">
+	
+		<header>
+			<div>
+				<p:commandButton value="Z+" onclick="fonte('a');" />
+				<p:commandButton value="Z	-" onclick="fonte('d');" />
+				<p:commandButton value="N" onclick="fonte('n');" />
+			</div>
+		</header>
+
+		<h:form id="menu">
+			<p:menubar>
+				<p:menuitem value="Home" action="/Home?faces-redirect=true" />
+
+				<p:submenu label="Consultas"
+					rendered="#{loginBean.paciente.funcao != null}">
+					<p:menuitem value="Pacientes"
+						action="/ConsultaPacientes?faces-redirect=true"
+						rendered="#{loginBean.administrador}" />
+					<p:menuitem value="Médicos"
+						action="/ConsultaMedicos?faces-redirect=true"
+						rendered="#{loginBean.administrador}" />
+						
+					<p:menuitem value="Agendamentos"
+						action="/ConsultaConsultas?faces-redirect=true" />
+				</p:submenu>
+
+				<p:submenu label="Cadastros"
+					rendered="#{loginBean.paciente.funcao != null}">
+					<p:menuitem value="Pacientes"
+						action="/CadastroPacientes?faces-redirect=true"
+						rendered="#{loginBean.administrador}" />
+					<p:menuitem value="Médicos"
+						action="/CadastroMedicos?faces-redirect=true"
+						rendered="#{loginBean.administrador}" />
+					<p:menuitem value="Consultas"
+						action="/CadastroConsultas?faces-redirect=true" />
+				</p:submenu>
+
+				<p:menuitem value="Sair" action="#{loginBean.logout}"
+					rendered="#{loginBean.paciente.funcao != null}" update="@form" />
+
+			</p:menubar>
+
+		</h:form>
+
+		<div id="conteudo">
+			<ui:insert name="corpo" />
+		</div>
+
+		<footer>
+			<div id="footer-brasil"></div>
+		</footer>
+	</div>
+</h:body>
+
+	
+</f:view>
+</html>

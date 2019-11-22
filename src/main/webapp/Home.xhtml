@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{loginBean.paciente}" />
+		<f:viewAction action="#{loginBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Boas vindas</ui:define>
+
+	<ui:define name="corpo">
+
+		<h2 align="center">
+			Seja bem-vindo(a) ao Sistema de Agendamento de Consultas! <br /> <br />
+		</h2>
+
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" />
+			<div align="center">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="Tipo de Usuário" for="funcao" />
+					<p:selectOneMenu id="funcao"
+						value="#{loginBean.paciente.funcao}" required="true">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{loginBean.funcaoEnum}"
+							var="funcao" itemValue="#{crmEstado}"
+							itemLabel="#{funcao.descricao}" required="true"
+							requiredMessage="Estado do CRM obrigatório" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Matricula" for="matricula"
+						style="text-align: center" />
+					<p:inputText id="matricula" value="#{loginBean.paciente.matricula}"
+						required="true" requiredMessage="Matricula obrigatória" />
+
+					<p:outputLabel value="Senha" for="senha" style="text-align: center" />
+					<p:password id="senha" value="#{loginBean.paciente.senha}"
+						required="true" requiredMessage="Senha obrigatória" />
+
+					<p:commandButton value="Login" action="#{loginBean.login}"
+						style="text-align: center" update="@form" />
+
+				</p:panelGrid>
+				<br /> <br />
+				<p:link href="CadastroPacientes.xhtml"
+					value="Ainda não tem uma conta? Clique aqui!" />
+			</div>
+			<br />
+		</h:form>
+	</ui:define>
+</ui:composition>
