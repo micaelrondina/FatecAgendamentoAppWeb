@@ -113,6 +113,3 @@ target/
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
-# End of https://www.gitignore.io/api/java,linux,eclipse,java-web
-/src/main/java/br/fepi/si/util/Alunos.java
